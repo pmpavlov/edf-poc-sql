@@ -55,13 +55,13 @@ functions:
     timeout: 10
     memorySize: 128
     role: SqlLambdaRole
-    vpc:
-      securityGroupIds:
-        - sg-09299c71
-      subnetIds:
-        - subnet-2513b50f
-        - subnet-27cb5b51
-        - subnet-df0aa287
+#    vpc:
+#      securityGroupIds:
+#        - sg-09299c71
+#      subnetIds:
+#        - subnet-2513b50f
+#        - subnet-27cb5b51
+#        - subnet-df0aa287
     events:
       - s3: 
           bucket: use1-sql
@@ -76,13 +76,13 @@ functions:
     timeout: 10
     memorySize: 128
     role: SqlLambdaRole
-    vpc:
-      securityGroupIds:
-        - sg-09299c71
-      subnetIds:
-        - subnet-2513b50f
-        - subnet-27cb5b51
-        - subnet-df0aa287
+#    vpc:
+#      securityGroupIds:
+#        - sg-09299c71
+#      subnetIds:
+#        - subnet-2513b50f
+#        - subnet-27cb5b51
+#        - subnet-df0aa287
 
 resources:
   Resources:
@@ -116,6 +116,10 @@ resources:
                     - ec2:DescribeNetworkInterfaces
                     - ec2:DetachNetworkInterface
                     - ec2:DeleteNetworkInterface
+                  Resource: "*"
+                - Effect: Allow
+                  Action:
+                    - lambda:InvokeFunction
                   Resource: "*"
                 - Effect: Allow
                   Action:
