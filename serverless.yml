@@ -16,7 +16,9 @@ defaults:
   timeout: 10
   memorySize: 256
   deploymentBucket: use1-serverless
- 
+
+environment: ${file(env-${self:provider.stage}.yml)}
+
 iamRoleStatements:
     -  Effect: "Allow"
        Action:
@@ -67,11 +69,6 @@ functions:
           rules:
             - prefix: uploads/
             - suffix: .sql
-
-#    Define function environment variables here
-#    environment:
-#      variable2: value2
-
 
 resources:
   Resources:
