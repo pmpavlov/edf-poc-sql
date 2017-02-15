@@ -22,8 +22,9 @@ def callOtherLambdaFunc(func,sql):
 	print(response_lambda['Payload'].read().decode("utf-8"))
 
 
+
 def handler(event,task):
-	sql = json.load(event)
+
 	#############################################
 	## Specify where the SQL file stored in S3 ##
 	#############################################
@@ -34,20 +35,20 @@ def handler(event,task):
 	## Reads the SQL file from S3 bucket and returns entire contents ##
 	###################################################################
 	body = getSQLfromS3(bucket,sql_file)
-	j = peter_lambda.GetSQLFromS3(body,sql['sql'])
+	j = peter_lambda.GetSQLFromS3(body,event['sql'])
 	sqlArray = j.constructSQL()
 
 
 	for i in sqlArray: 
-		callOtherLambdaFunc("Peter-poc",i)
-		print(i)
+		callOtherLambdaFunc(event['func'],i)
+		#print(i)
 
 
 
 
 if __name__ == "__main__":
 	task = "DROP_TEMPORARIES"
+	event = {'sql':task, 'func':"Simple-func"}
 	#task = "STOP_TIMER"
 	#task = "MERGE_BOTH"
-	event = ""
 	handler(event,task)
