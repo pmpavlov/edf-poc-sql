@@ -92,7 +92,7 @@ resources:
                     - logs:CreateLogGroup
                     - logs:CreateLogStream
                     - logs:PutLogEvents
-                  Resource: arn:aws:logs:${opt:region, self:provider.region}:666781193487:log-group:/aws/lambda/*:*:*
+                  Resource: arn:aws:logs:${opt:region, self:provider.region}:*:log-group:/aws/lambda/*:*:*
                 - Effect: Allow
                   Action:
                     - ec2:CreateNetworkInterface
