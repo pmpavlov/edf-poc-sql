@@ -8,6 +8,7 @@ __pycache__/
 
 # Serverless Framework directories
 .serverless
+env-*.yml
 
 # Distribution / packaging
 .Python

@@ -16,7 +16,9 @@ defaults:
   timeout: 10
   memorySize: 256
   deploymentBucket: use1-serverless
- 
+
+environment: ${file(env-${self:provider.stage}.yml)}
+
 iamRoleStatements:
     -  Effect: "Allow"
        Action:
@@ -46,20 +48,20 @@ package:
     - LICENSE
 
 functions:
-  inject:
+  parsing:
     handler: handler.handler
-    name: ${self:provider.stage}-lambda
-    description: Lambda That will run mysql query
+    name: ${self:provider.stage}-parser
+    description: Lambda That will parse the sql files
     timeout: 10
     memorySize: 128
     role: SqlLambdaRole
-    vpc:
-      securityGroupIds:
-        - sg-09299c71
-      subnetIds:
-        - subnet-2513b50f
-        - subnet-27cb5b51
-        - subnet-df0aa287
+#    vpc:
+#      securityGroupIds:
+#        - sg-09299c71
+#      subnetIds:
+#        - subnet-2513b50f
+#        - subnet-27cb5b51
+#        - subnet-df0aa287
     events:
       - s3: 
           bucket: use1-sql
@@ -67,11 +69,20 @@ functions:
           rules:
             - prefix: uploads/
             - suffix: .sql
-
-#    Define function environment variables here
-#    environment:
-#      variable2: value2
-
+  injection:
+    handler: injection.injection
+    name: ${self:provider.stage}-injection
+    description: Lambda That will inject the sql statment
+    timeout: 10
+    memorySize: 128
+    role: SqlLambdaRole
+#    vpc:
+#      securityGroupIds:
+#        - sg-09299c71
+#      subnetIds:
+#        - subnet-2513b50f
+#        - subnet-27cb5b51
+#        - subnet-df0aa287
 
 resources:
   Resources:
@@ -105,6 +116,10 @@ resources:
                     - ec2:DescribeNetworkInterfaces
                     - ec2:DetachNetworkInterface
                     - ec2:DeleteNetworkInterface
+                  Resource: "*"
+                - Effect: Allow
+                  Action:
+                    - lambda:InvokeFunction
                   Resource: "*"
                 - Effect: Allow
                   Action:

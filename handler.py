@@ -27,8 +27,8 @@ def handler(event,task):
 	#############################################
 	## Specify where the SQL file stored in S3 ##
 	#############################################
-	bucket = "grimreaperlab01"
-	sql_file = "data/ESTATUS_UPDATE.sql"
+	bucket = "use1-sql"
+	sql_file = "uploads/ESTATUS_UPDATE.sql"
 
 	###################################################################
 	## Reads the SQL file from S3 bucket and returns entire contents ##
