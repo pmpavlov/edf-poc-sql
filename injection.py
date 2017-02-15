@@ -1,6 +1,7 @@
 def injection(event, context):
   message = {
-    'message': 'Hello World'
+    'event': event,
+		'task': task
   }
 
   return message
