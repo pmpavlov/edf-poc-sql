@@ -1,7 +1,7 @@
 def injection(event, context):
   message = {
     'event': event,
-    'task': task
+    'task': context
   }
 
   return message
