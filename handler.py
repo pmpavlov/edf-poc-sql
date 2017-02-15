@@ -42,6 +42,8 @@ def handler(event,task):
 		callOtherLambdaFunc(event['func'],i)
 		#print(i)
 
+	return "OK"
+
 
 
 
