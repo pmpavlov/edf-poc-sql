@@ -11,27 +11,30 @@ def getSQLfromS3(bucket,key):
 
 def callOtherLambdaFunc(func,sql):
 	lambda_func = boto3.client('lambda')
-	sqlStatement = {'sql':sql}
+	sqlStatement = {"sql":sql}
 
 	response_lambda = lambda_func.invoke(
-    	FunctionName = func,
+    	FunctionName = func, 
 			Payload = json.dumps(sqlStatement, sort_keys=True)
+			#Payload = '{"shin":"imai"}'
+			#Payload = sqlStatement
 	)
 	print(response_lambda['Payload'].read().decode("utf-8"))
 
 
 def handler(event,task):
+	sql = json.load(event)
 	#############################################
 	## Specify where the SQL file stored in S3 ##
 	#############################################
-	bucket = "use1-sql"
-	sql_file = "uploads/ESTATUS_UPDATE.sql"
+	bucket = "grimreaperlab01"
+	sql_file = "data/ESTATUS_UPDATE.sql"
 
 	###################################################################
 	## Reads the SQL file from S3 bucket and returns entire contents ##
 	###################################################################
 	body = getSQLfromS3(bucket,sql_file)
-	j = peter_lambda.GetSQLFromS3(body,event)
+	j = peter_lambda.GetSQLFromS3(body,sql['sql'])
 	sqlArray = j.constructSQL()
 
 
@@ -43,8 +46,8 @@ def handler(event,task):
 
 
 if __name__ == "__main__":
-	#task = "DROP_TEMPORARIES"
-	task = "STOP_TIMER"
+	task = "DROP_TEMPORARIES"
+	#task = "STOP_TIMER"
 	#task = "MERGE_BOTH"
 	event = ""
 	handler(event,task)
