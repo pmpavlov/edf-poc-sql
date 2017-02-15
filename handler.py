@@ -46,8 +46,8 @@ def handler(event,task):
 
 
 if __name__ == "__main__":
-	task = "DROP_TEMPORARIES"
-	event = {'sql':task, 'func':"Simple-func"}
-	#task = "STOP_TIMER"
+	#task = "DROP_TEMPORARIES"
+	task = "STOP_TIMER"
 	#task = "MERGE_BOTH"
+	event = {'sql':task, 'func':"Simple-func"}
 	handler(event,task)
