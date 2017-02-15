@@ -23,7 +23,7 @@ def callOtherLambdaFunc(func,sql):
 
 
 def handler(event,task):
-	sql = json.load(event)
+	sql = json.loads(event)
 	#############################################
 	## Specify where the SQL file stored in S3 ##
 	#############################################
