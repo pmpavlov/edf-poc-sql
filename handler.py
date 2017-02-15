@@ -42,8 +42,7 @@ def handler(event,task):
 		callOtherLambdaFunc(event['func'],i)
 		#print(i)
 
-
-
+	return "OK"
 
 if __name__ == "__main__":
 	#task = "DROP_TEMPORARIES"
