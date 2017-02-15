@@ -48,10 +48,10 @@ package:
     - LICENSE
 
 functions:
-  inject:
+  parsing:
     handler: handler.handler
-    name: ${self:provider.stage}-lambda
-    description: Lambda That will run mysql query
+    name: ${self:provider.stage}-parser
+    description: Lambda That will parse the sql files
     timeout: 10
     memorySize: 128
     role: SqlLambdaRole
@@ -69,6 +69,20 @@ functions:
           rules:
             - prefix: uploads/
             - suffix: .sql
+  injection:
+    handler: injection.injection
+    name: ${self:provider.stage}-injection
+    description: Lambda That will inject the sql statment
+    timeout: 10
+    memorySize: 128
+    role: SqlLambdaRole
+    vpc:
+      securityGroupIds:
+        - sg-09299c71
+      subnetIds:
+        - subnet-2513b50f
+        - subnet-27cb5b51
+        - subnet-df0aa287
 
 resources:
   Resources:
