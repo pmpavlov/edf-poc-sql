@@ -24,7 +24,6 @@ def callOtherLambdaFunc(func,sql):
 
 
 def handler(event,task):
-
 	#############################################
 	## Specify where the SQL file stored in S3 ##
 	#############################################
