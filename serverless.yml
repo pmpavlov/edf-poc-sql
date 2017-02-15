@@ -6,6 +6,8 @@ provider:
   runtime: python2.7
   stage: ${opt:stage, self:custom.defaultStage}
   profile: ${self:custom.profiles.${self:provider.stage}}
+  cfLogs: true
+  versionFunctions: false
 custom:
   defaultStage: dev
   profiles:
@@ -50,7 +52,8 @@ package:
 functions:
   parsing:
     handler: handler.handler
-    name: ${self:provider.stage}-parser
+    name: ${self:service}-parser
+    alias: ${self:provider.stage}
     description: Lambda That will parse the sql files
     timeout: 10
     memorySize: 128
@@ -71,7 +74,8 @@ functions:
             - suffix: .sql
   injection:
     handler: injection.injection
-    name: ${self:provider.stage}-injection
+    name: ${self:service}-injection
+    alias: ${self:provider.stage}
     description: Lambda That will inject the sql statment
     timeout: 10
     memorySize: 128
